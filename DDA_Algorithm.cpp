@@ -1,32 +1,33 @@
 #include <iostream>
-#include <graphics.h>
-#include <cmath>
+#include <cmath> // For abs() function
+using namespace std;
 
-void DDA(int x1, int y1, int x2, int y2) {
-    int gd = DETECT, gm;
-    initgraph(&gd, &gm, (char*)"");
+void drawLineDDA(float x1, float y1, float x2, float y2) {
+    float dx = x2 - x1;
+    float dy = y2 - y1;
 
-    int dx = x2 - x1;
-    int dy = y2 - y1;
-    int steps = std::max(abs(dx), abs(dy));
+    // Calculate the number of steps required
+    int steps = max(abs(dx), abs(dy));
 
-    float Xinc = dx / (float)steps;
-    float Yinc = dy / (float)steps;
+    // Calculate increments
+    float xIncrement = dx / steps;
+    float yIncrement = dy / steps;
 
-    float X = x1, Y = y1;
+    float x = x1;
+    float y = y1;
+
+    cout << "DDA Line Drawing Algorithm Points:\n";
+
+    // Generate and print the points on the line
     for (int i = 0; i <= steps; i++) {
-        putpixel(round(X), round(Y), WHITE);
-        X += Xinc;
-        Y += Yinc;
-        delay(10);
+        cout << "(" << round(x) << ", " << round(y) << ")\n";
+        x += xIncrement;
+        y += yIncrement;
     }
-
-    getch();
-    closegraph();
 }
 
 int main() {
-    int x1 = 100, y1 = 100, x2 = 400, y2 = 300;
-    DDA(x1, y1, x2, y2);
+    float x1 = 32, y1 = 35, x2 = 41, y2 = 41;
+    drawLineDDA(x1, y1, x2, y2);
     return 0;
 }
